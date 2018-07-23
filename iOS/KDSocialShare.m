@@ -24,11 +24,12 @@ RCT_EXPORT_MODULE()
      options:(NSDictionary *)options
     callback:(RCTResponseSenderBlock)callback
 {
-  if (![SLComposeViewController isAvailableForServiceType:serviceType]) {
+  SLComposeViewController *composeCtl = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+  
+  if (!composeCtl) {
     callback(@[@"not_available"]);
     return;
   }
-  SLComposeViewController *composeCtl = [SLComposeViewController composeViewControllerForServiceType:serviceType];
 
   if ([options objectForKey:@"link"] && [options objectForKey:@"link"] != [NSNull null]) {
     NSString *link = [RCTConvert NSString:options[@"link"]];
